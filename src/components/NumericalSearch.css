@@ -1,0 +1,136 @@
+.numerical-search-container {
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.search-header {
+  margin-bottom: 20px;
+}
+
+.search-header h3 {
+  margin: 0 0 8px 0;
+  color: var(--text-primary);
+}
+
+.search-header p {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.search-controls {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.field-select,
+.number-input {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.field-select {
+  min-width: 150px;
+}
+
+.number-input {
+  width: 120px;
+}
+
+.search-button {
+  padding: 10px 20px;
+  background: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.search-button:hover:not(:disabled) {
+  background: #357abd;
+}
+
+.search-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background: #ff4444;
+  color: white;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.search-results {
+  margin-top: 20px;
+}
+
+.search-results h4 {
+  margin: 0 0 15px 0;
+  color: var(--text-primary);
+}
+
+.result-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 15px;
+  transition: all 0.3s ease;
+}
+
+.result-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.result-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.numerical-badge {
+  background: #4a90e2;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.result-content {
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.result-content p {
+  margin: 0;
+}
+
+.result-metadata,
+.result-category {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+}
