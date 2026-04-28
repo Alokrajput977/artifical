@@ -283,47 +283,48 @@ const App = () => {
   };
 
   const sendMessageWithText = async (textToSend) => {
-    if (!textToSend.trim() || isTyping || !activeChat) return;
+  if (!textToSend.trim() || isTyping || !activeChat) return;
 
-    const userMessage = {
-      id: Date.now().toString(),
-      role: 'user',
-      content: textToSend,
-      timestamp: new Date().toISOString()
-    };
+  setInput('');
+  setIsTyping(true);
 
-    // Add user message to chat
-    await addMessageToChat(activeChatId, userMessage);
-    setInput('');
-    setIsTyping(true);
+  try {
+    // Call the new AI endpoint
+    const response = await fetch(`${API_BASE_URL}/chats/${activeChatId}/ai-message`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: textToSend })
+    });
 
-    // Simulate AI response
-    setTimeout(async () => {
-      const responses = [
-        "🔧 Processing your request... I've analyzed the data and here's what I found:",
-        "⚡ Great question! Let me compute the best answer for you:",
-        "🤖 As an AI system, I'd love to help with that. Here's my response:",
-        "✨ Interesting! Based on my neural networks, I recommend:",
-        "💡 I've processed your query and here's my insight:"
-      ];
-      
-      const aiResponse = `${responses[Math.floor(Math.random() * responses.length)]}\n\n${textToSend}`;
-      
-      const aiMessage = {
-        id: (Date.now() + 1).toString(),
-        role: 'assistant',
-        content: aiResponse,
-        timestamp: new Date().toISOString()
-      };
-      
-      await addMessageToChat(activeChatId, aiMessage);
-      setIsTyping(false);
-      
+    if (!response.ok) {
+      throw new Error('Failed to get AI response');
+    }
+
+    const data = await response.json();
+    
+    // Update local state with the new chat data
+    setChats(prev => {
+      const updatedChats = prev.map(chat =>
+        chat.id === activeChatId ? data.chat : chat
+      );
+      return sortChatsByDate(updatedChats);
+    });
+    
+    setIsTyping(false);
+    
+    // Speak the response
+    if (data.ai_response) {
       setTimeout(() => {
-        speakMessage(aiResponse);
+        speakMessage(data.ai_response);
       }, 500);
-    }, 1500);
-  };
+    }
+    
+  } catch (error) {
+    console.error('Error sending message:', error);
+    setIsTyping(false);
+    setError('Failed to get AI response. Please check if Ollama is running.');
+  }
+};
 
   const sendMessage = async () => {
     await sendMessageWithText(input);
